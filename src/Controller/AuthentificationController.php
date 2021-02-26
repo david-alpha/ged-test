@@ -42,6 +42,17 @@ class AuthentificationController extends AbstractController
             'controller_name' => "Ajout en base de données.",
         ]);
     }
+	#[Route('/listeUser', name: 'listeUser')]
+    public function listeUser(Request $request, EntityManagerInterface $manager): Response
+    {
+		//Requête qui récupère la liste des Users
+		$listeUser = $manager->getRepository(Utilisateur::class)->findAll();
+				
+        return $this->render('authentification/listeUser.html.twig', [
+            'controller_name' => "Liste des Utilisateurs",
+            'listeUser' => $listeUser,
+        ]);
+    }
 	#[Route('/connexion', name: 'connexion')]
     public function connexion(Request $request, EntityManagerInterface $manager): Response
     {
