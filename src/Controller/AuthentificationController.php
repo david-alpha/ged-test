@@ -81,6 +81,15 @@ class AuthentificationController extends AbstractController
             // 'controller_name' => "Ajout en base de données.",
         // ]);
     }
+	#[Route('/deleteUser/{id}', name: 'deleteUser')]
+    public function deleteUser(Request $request, EntityManagerInterface $manager, Utilisateur $id): Response
+    {
+		
+		$manager->remove($id);
+		$manager->flush();
+			
+       return $this->redirectToRoute('listeUser');
+    }
 	#[Route('/dashboard', name: 'dashboard')]
     public function dashboard(Request $request, EntityManagerInterface $manager): Response
     {
