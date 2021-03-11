@@ -4,6 +4,11 @@
 
 {% block body %}
 <h1>{{ controller_name }}</h1>
+{% for message in app.flashes('notice') %}
+    <div class="flash-notice alert alert-dismissible alert-danger">
+        {{ message }}
+    </div>
+{% endfor %}
 <table class="table table-hover">
   <thead>
     <tr>
@@ -16,9 +21,47 @@
     <tr class="table">
       <th scope="row">{{ item.type }}</th>
       <td><a href="/deleteGenre/{{ item.id }}"><i class="bi bi-trash"></i></a></td>
+      <!--<td><a href=""  data-toggle= "modal" data-target="#demande"><i class="bi bi-trash"></i></a></td>-->
     </tr>
 	{% endfor %}
   </tbody>
 </table>
+
+<div class="modal" id="demande">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Choix utilisateur</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+		<form action="/rien" method="post">
+			<fieldset>
+				<label for="staticNom" class="col-sm-12 col-form-label">Remplacé par un genre existant</label>
+					<div class="col-sm-10">
+						<select class="form-group" name="genre">
+							{% for item in listeGenre %}
+								<option class="form-group" value= {{ item.id }}>{{ item.type }}</option>
+							{% endfor %}
+						</select>
+					</div>
+				 <label for="staticPrenom" class="col-sm-12 col-form-label">Nouveau genre</label>
+				  <div class="col-sm-10">
+					<input type="text" class="form-group" id="nouveau" name="nouveau">
+				  </div>
+			</fieldset>
+
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		</form>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 {% endblock %}
